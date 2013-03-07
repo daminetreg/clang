@@ -1,4 +1,4 @@
-set(libclang_cmake_builddir "${CMAKE_BINARY_DIR}/share/cmake/libclang-${LIBCLANG_LIBRARY_VERSION}")
+set(libclang_cmake_builddir "${CMAKE_BINARY_DIR}/lib/cmake/libclang-${LIBCLANG_LIBRARY_VERSION}")
 
 configure_file (
     libclang-config.cmake.in
@@ -13,4 +13,4 @@ configure_file (
 install(FILES
     ${libclang_cmake_builddir}/libclang-config.cmake
     ${libclang_cmake_builddir}/libclang-config-version.cmake
-    DESTINATION share/cmake/libclang-${LIBCLANG_LIBRARY_VERSION})
+    DESTINATION lib/cmake/libclang-${LIBCLANG_LIBRARY_VERSION})
