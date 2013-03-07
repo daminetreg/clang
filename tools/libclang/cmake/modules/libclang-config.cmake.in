@@ -1,0 +1,31 @@
+# libclang @LIBCLANG_LIBRARY_VERSION@ - CMake Package Configuration File
+#
+#   To use libclang in your software, simply add the following to your 
+#   CMakeLists.txt :
+#
+#       find_package(libclang @LIBCLANG_LIBRARY_VERSION@ REQUIRED)
+#       link_directories(${LIBCLANG_LIBRARY_DIRS}) 
+#       include_directories(${LIBCLANG_INCLUDE_DIRS})
+#       add_definitions(${LIBCLANG_DEFINITIONS})
+#
+#   Once this done you can simply add *clang* to your target_link_libraries, e.g:
+#       target_link_libraries(yourTarget clang)
+#       
+#   In case you have installed an LLVM version which was compiled without 
+#   defining REQUIRES_RTTI=1, then you are probably getting problems with
+#   missing  typeid symbols (i.e. of the mangled form : _ZTIN5[...]E) when the 
+#   dynamic linker resolve symbols in your binary. 
+#
+#   To solve the issue, find a version of llvm and clang compiled with rtti 
+#   enabled, because this should be the case for released clang versions.
+#   (c.f. llvm/docs/Packaging.rst)
+#
+
+set(LIBCLANG_VERSION_MAJOR @CLANG_VERSION_MAJOR@)
+set(LIBCLANG_VERSION_MINOR @CLANG_VERSION_MINOR@)
+set(LIBCLANG_PACKAGE_VERSION @LIBCLANG_LIBRARY_VERSION@)
+
+set(LIBCLANG_INSTALL_PREFIX "@CMAKE_INSTALL_PREFIX@")
+set(LIBCLANG_INCLUDE_DIRS ${LIBCLANG_INSTALL_PREFIX}/include)
+set(LIBCLANG_LIBRARY_DIRS ${LIBCLANG_INSTALL_PREFIX}/lib)
+set(LIBCLANG_DEFINITIONS "-D__STDC_LIMIT_MACROS" "-D__STDC_CONSTANT_MACROS")

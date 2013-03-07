@@ -1,3 +1,5 @@
+add_subdirectory(cmake/modules)
+
 set(LLVM_LINK_COMPONENTS
   ${LLVM_TARGETS_TO_BUILD}
   asmparser
