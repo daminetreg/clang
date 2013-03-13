@@ -266,9 +266,26 @@ add_definitions(-DCLANG_ENABLE_ARCMT -DCLANG_ENABLE_REWRITER -DCLANG_ENABLE_STAT
 set(CLANG_EXECUTABLE_VERSION
      "${CLANG_VERSION_MAJOR}.${CLANG_VERSION_MINOR}" CACHE STRING
     "Version number that will be placed into the clang executable, in the form XX.YY")
+
+# libclang version information
+FILE (STRINGS include/clang-c/Index.h CINDEX_VERSION_MAJOR_TMP REGEX
+	"^#define CINDEX_VERSION_MAJOR[ \t]+[0-9\\.]+")
+
+string(REGEX REPLACE "#define CINDEX_VERSION_MAJOR[ \t]+"
+	"" CINDEX_VERSION_MAJOR 
+	 ${CINDEX_VERSION_MAJOR_TMP})
+
+FILE (STRINGS include/clang-c/Index.h CINDEX_VERSION_MINOR_TMP REGEX
+	"^#define CINDEX_VERSION_MINOR[ \t]+[0-9\\.]+")
+
+string(REGEX REPLACE "#define CINDEX_VERSION_MINOR[ \t]+"
+	"" CINDEX_VERSION_MINOR 
+	 ${CINDEX_VERSION_MINOR_TMP})
+
 set(LIBCLANG_LIBRARY_VERSION
-     "${CLANG_VERSION_MAJOR}.${CLANG_VERSION_MINOR}" CACHE STRING
-    "Version number that will be placed into the libclang library , in the form XX.YY")
+	"${CINDEX_VERSION_MAJOR}.${CINDEX_VERSION_MINOR}.${CLANG_VERSION_MAJOR}.${CLANG_VERSION_MINOR}" CACHE STRING
+	 "Version number that will be placed into the libclang library , in the form VV.WW.XX.YY, the first two defines ABI/API and the others the clang version the lib comes from")
+ MESSAGE(STATUS "libclang version : ${LIBCLANG_LIBRARY_VERSION}")
 mark_as_advanced(CLANG_EXECUTABLE_VERSION LIBCLANG_LIBRARY_VERSION)
 
 add_subdirectory(utils/TableGen)
